@@ -1,4 +1,5 @@
 (function () {
+  var CFG = window.INSTASWAP || { api: '', site: location.origin };
   var $ = function (id) { return document.getElementById(id); };
   var show = function (id) {
     ['setup', 'code', 'connect', 'done'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); });
@@ -21,7 +22,7 @@
   }
 
   function renderCode(host) {
-    var link = location.origin + '/?u=' + encodeURIComponent(host.id);
+    var link = CFG.site + '/?u=' + encodeURIComponent(host.id);
     $('shareLink').value = link;
     $('qr').innerHTML = '';
     try {
@@ -36,7 +37,7 @@
 
   // ================= GUEST FLOW =================
   if (hostId) {
-    fetch('/api/hosts/' + encodeURIComponent(hostId))
+    fetch(CFG.api + '/api/hosts/' + encodeURIComponent(hostId))
       .then(function (r) { if (!r.ok) throw new Error('gone'); return r.json(); })
       .then(function (h) {
         $('hostName').textContent = '@' + h.handle;
@@ -52,7 +53,7 @@
           localStorage.setItem(MINE_KEY, guest);
           $('swapBtn').setAttribute('disabled', ''); $('swapBtn').textContent = 'Swapping…';
 
-          fetch('/api/swaps', {
+          fetch(CFG.api + '/api/swaps', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ hostId: h.id, guest: guest })
           }).then(function (r) { return r.json(); })
@@ -96,7 +97,7 @@
     if (cur && cur.handle === h && cur.id && cur.token) { renderCode(cur); return; }
 
     $('createBtn').setAttribute('disabled', ''); $('createBtn').textContent = 'Creating…';
-    fetch('/api/hosts', {
+    fetch(CFG.api + '/api/hosts', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ handle: h })
     }).then(function (r) { if (!r.ok) throw new Error('bad'); return r.json(); })

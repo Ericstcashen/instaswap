@@ -22,8 +22,10 @@
     <div class="list" id="list"></div>
   </div>
 
+  <script src="/config.js"></script>
   <script>
   (function () {
+    var CFG = window.INSTASWAP || { api: '' };
     var $ = function (id) { return document.getElementById(id); };
     var host = null;
     try { host = JSON.parse(localStorage.getItem('instaswap.host')); } catch (e) {}
@@ -49,7 +51,7 @@
     }
 
     function setFollowed(id, followed) {
-      fetch('/api/swaps/' + id + '/followed', {
+      fetch(CFG.api + '/api/swaps/' + id + '/followed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-host-token': host.token },
         body: JSON.stringify({ followed: followed })
@@ -94,7 +96,7 @@
     }
 
     function load() {
-      fetch('/api/swaps', { headers: { 'x-host-token': host.token } })
+      fetch(CFG.api + '/api/swaps', { headers: { 'x-host-token': host.token } })
         .then(function (r) {
           if (r.status === 401) throw new Error('unauthorized');
           return r.json();
