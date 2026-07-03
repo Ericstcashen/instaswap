@@ -106,6 +106,35 @@
       .finally(function () { $('createBtn').removeAttribute('disabled'); $('createBtn').textContent = 'Create my code'; });
   };
 
+  // ---- native "scan someone's code" ----
+  // Turns a scanned InstaSwap QR into a mutual swap: extract the code and jump
+  // into the connect flow (with this phone's handle already remembered).
+  function handleScannedText(text) {
+    var id = null;
+    try { id = new URL(text).searchParams.get('u'); } catch (e) { /* not a URL */ }
+    if (!id && /^[a-z0-9]{6,}$/i.test((text || '').trim())) id = text.trim();
+    if (!id) { alert("That QR isn't an InstaSwap code."); return; }
+    location.href = '/?u=' + encodeURIComponent(id);
+  }
+
+  async function startScan() {
+    var P = window.Capacitor && window.Capacitor.Plugins;
+    var scanner = P && (P.BarcodeScanning || P.BarcodeScanner);
+    if (scanner && scanner.scan) {
+      try {
+        var res = await scanner.scan();
+        var b = res && res.barcodes && res.barcodes[0];
+        var val = (b && (b.rawValue || b.displayValue)) || res.content;
+        if (val) handleScannedText(val);
+      } catch (e) { /* user cancelled */ }
+      return;
+    }
+    // Fallback until the native scanner is wired (also lets us test on web):
+    var t = prompt('Paste an InstaSwap link or code to simulate a scan:');
+    if (t) handleScannedText(t);
+  }
+  $('scanBtn').onclick = startScan;
+
   $('editBtn').onclick = function () { show('setup'); };
   $('copyBtn').onclick = function () {
     $('shareLink').select();
