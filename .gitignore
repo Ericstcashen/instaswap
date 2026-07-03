@@ -1,2 +1,7 @@
 data/
 node_modules/
+
+# iOS build artifacts
+ios/build/
+DerivedData/
+.DS_Store
