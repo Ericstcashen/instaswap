@@ -13,7 +13,7 @@ const qrSvg = await QRCode.toString('https://instaswap.onrender.com/?u=eric', {
 
 const page = (body, extra = '') => `<!doctype html><html><head><meta charset="utf-8">
 <style>${css}
-html,body{width:440px;height:956px;overflow:hidden}
+html,body{width:428px;height:926px;overflow:hidden}
 ${extra}</style></head><body>${body}</body></html>`;
 
 const brand = `<div class="brand"><div class="logo"></div><b>Swaply</b></div>`;
