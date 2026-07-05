@@ -1,17 +1,12 @@
-# Render Blueprint — deploys InstaSwap as a Node web service.
-# Render reads this automatically in the Blueprint flow.
-#
-# NOTE: currently on the FREE tier to prove the deploy with no payment.
-# Free tier = slow cold starts + EPHEMERAL disk (swaps reset on restart/redeploy).
-# Before real launch, upgrade to persist data:
-#   plan: starter
-#   + add a disk:  { name: instaswap-data, mountPath: /var/data, sizeGB: 1 }
-#   + set env INSTASWAP_DATA_DIR=/var/data
+# Render Blueprint — Swaply backend, production tier.
+# Starter plan ($7/mo): always-on (no cold starts) + a persistent 1 GB disk so
+# swap data survives restarts and redeploys. INSTASWAP_DATA_DIR points the JSON
+# store at the mounted disk.
 services:
   - type: web
     name: instaswap
     runtime: node
-    plan: free
+    plan: starter
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /healthz
@@ -19,3 +14,9 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+      - key: INSTASWAP_DATA_DIR
+        value: /var/data
+    disk:
+      name: instaswap-data
+      mountPath: /var/data
+      sizeGB: 1
