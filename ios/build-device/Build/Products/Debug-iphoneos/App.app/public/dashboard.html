@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Your swaps · InstaSwap</title>
+  <meta name="theme-color" content="#000000" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="card">
+    <div class="brand"><div class="logo"></div><b>InstaSwap</b></div>
+
+    <div class="dhead"><h1>Your swaps</h1><span class="count" id="count"></span></div>
+    <p class="dsub" id="who"></p>
+
+    <div class="toolbar">
+      <a href="/">＋ Show my code</a>
+      <button id="refreshBtn">↻ Refresh</button>
+    </div>
+
+    <div class="list" id="list"></div>
+  </div>
+
+  <script src="/config.js"></script>
+  <script>
+  (function () {
+    var CFG = window.INSTASWAP || { api: '' };
+    var $ = function (id) { return document.getElementById(id); };
+    var host = null;
+    try { host = JSON.parse(localStorage.getItem('instaswap.host')); } catch (e) {}
+
+    function ago(ts) {
+      var s = Math.floor((Date.now() - ts) / 1000);
+      if (s < 60) return 'just now';
+      var m = Math.floor(s / 60); if (m < 60) return m + 'm ago';
+      var h = Math.floor(m / 60); if (h < 24) return h + 'h ago';
+      return Math.floor(h / 24) + 'd ago';
+    }
+    function openInstagram(handle) {
+      var web = 'https://instagram.com/' + encodeURIComponent(handle);
+      var t = setTimeout(function () { location.href = web; }, 1200);
+      window.addEventListener('pagehide', function () { clearTimeout(t); }, { once: true });
+      location.href = 'instagram://user?username=' + encodeURIComponent(handle);
+    }
+
+    if (!host || !host.token) {
+      $('who').textContent = '';
+      $('list').innerHTML = '<div class="empty">No code on this phone yet.<br><a class="open" style="display:inline-block;margin-top:12px" href="/">Create your code →</a></div>';
+      return;
+    }
+
+    function setFollowed(id, followed) {
+      fetch(CFG.api + '/api/swaps/' + id + '/followed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-host-token': host.token },
+        body: JSON.stringify({ followed: followed })
+      });
+    }
+
+    function render(data) {
+      $('who').textContent = 'People who swapped with @' + data.handle;
+      $('count').textContent = data.swaps.length + (data.swaps.length === 1 ? ' swap' : ' swaps');
+      var list = $('list');
+      if (!data.swaps.length) {
+        list.innerHTML = '<div class="empty">No swaps yet.<br>Show your code and watch them roll in.</div>';
+        return;
+      }
+      list.innerHTML = '';
+      data.swaps.forEach(function (s) {
+        var row = document.createElement('div');
+        row.className = 'row' + (s.followed ? ' done' : '');
+
+        var av = document.createElement('div'); av.className = 'av';
+        av.textContent = s.guest.charAt(0).toUpperCase();
+
+        var meta = document.createElement('div'); meta.className = 'meta';
+        var name = document.createElement('div'); name.className = 'name'; name.textContent = '@' + s.guest;
+        var time = document.createElement('div'); time.className = 'time'; time.textContent = ago(s.createdAt);
+        meta.appendChild(name); meta.appendChild(time);
+
+        var open = document.createElement('button'); open.className = 'open'; open.textContent = 'Follow';
+        open.onclick = function () {
+          if (!s.followed) { s.followed = true; setFollowed(s.id, true); row.classList.add('done'); cb.checked = true; }
+          openInstagram(s.guest);
+        };
+
+        var lbl = document.createElement('label'); lbl.className = 'chk';
+        var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!s.followed;
+        cb.onchange = function () { s.followed = cb.checked; setFollowed(s.id, cb.checked); row.classList.toggle('done', cb.checked); };
+        lbl.appendChild(cb); lbl.appendChild(document.createTextNode('done'));
+
+        row.appendChild(av); row.appendChild(meta); row.appendChild(open); row.appendChild(lbl);
+        list.appendChild(row);
+      });
+    }
+
+    function load() {
+      fetch(CFG.api + '/api/swaps', { headers: { 'x-host-token': host.token } })
+        .then(function (r) {
+          if (r.status === 401) throw new Error('unauthorized');
+          return r.json();
+        })
+        .then(render)
+        .catch(function (e) {
+          $('list').innerHTML = '<div class="empty">' +
+            (e.message === 'unauthorized'
+              ? 'This code isn’t recognized by the server.<br><a class="open" style="display:inline-block;margin-top:12px" href="/">Create a new code →</a>'
+              : 'Could not load swaps. Is the server running?') + '</div>';
+        });
+    }
+
+    $('refreshBtn').onclick = load;
+    load();
+    setInterval(load, 15000); // auto-refresh while you're at the bar
+  })();
+  </script>
+</body>
+</html>

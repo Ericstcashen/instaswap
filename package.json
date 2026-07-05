@@ -15,7 +15,8 @@
     "@capacitor-mlkit/barcode-scanning": "^8.1.0",
     "@capacitor/core": "^8.4.1",
     "@capacitor/ios": "^8.4.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "jsqr": "^1.4.0"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

@@ -1,0 +1,8 @@
+{
+	"appId": "com.ericstcashen.instaswap",
+	"appName": "InstaSwap",
+	"webDir": "public",
+	"packageClassList": [
+		"BarcodeScannerPlugin"
+	]
+}
