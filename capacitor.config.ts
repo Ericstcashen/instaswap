@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.ericstcashen.instaswap',
-  appName: 'InstaSwap',
+  appName: 'Swaply',
   webDir: 'public'
 };
 

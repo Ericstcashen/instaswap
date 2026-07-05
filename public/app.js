@@ -69,7 +69,7 @@
       .catch(function () {
         $('hostName').textContent = 'Code not found';
         $('hostAv').textContent = '×';
-        $('connectErr').textContent = 'This InstaSwap code is invalid or expired.';
+        $('connectErr').textContent = 'This Swaply code is invalid or expired.';
         $('swapBtn').setAttribute('disabled', '');
         show('connect');
       });
@@ -107,13 +107,13 @@
   };
 
   // ---- native "scan someone's code" ----
-  // Turns a scanned InstaSwap QR into a mutual swap: extract the code and jump
+  // Turns a scanned Swaply QR into a mutual swap: extract the code and jump
   // into the connect flow (with this phone's handle already remembered).
   function handleScannedText(text) {
     var id = null;
     try { id = new URL(text).searchParams.get('u'); } catch (e) { /* not a URL */ }
     if (!id && /^[a-z0-9]{6,}$/i.test((text || '').trim())) id = text.trim();
-    if (!id) { alert("That QR isn't an InstaSwap code."); return; }
+    if (!id) { alert("That QR isn't an Swaply code."); return; }
     location.href = '/?u=' + encodeURIComponent(id);
   }
 
@@ -154,7 +154,7 @@
       try { await startCameraScan(); return; }
       catch (e) { stopCameraScan(); /* no camera / denied → manual fallback */ }
     }
-    var t = prompt('Paste an InstaSwap link or code:');
+    var t = prompt('Paste an Swaply link or code:');
     if (t) handleScannedText(t);
   }
   $('scanBtn').onclick = startScan;

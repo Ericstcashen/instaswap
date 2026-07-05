@@ -1,4 +1,4 @@
-# InstaSwap
+# Swaply
 
 Trade Instagram handles in one scan. One person shows a QR/link; the other types
 their handle once, and it lands in the host's **own dashboard** with a one-tap

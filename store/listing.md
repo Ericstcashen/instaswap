@@ -1,12 +1,12 @@
-# App Store listing — InstaSwap (draft)
+# App Store listing — Swaply
 
-> ⚠️ NAME/BRAND RISK — read first. See "Naming & trademark" at the bottom.
-> Apple + Meta commonly reject apps whose names contain "Insta" or "Gram", and
-> icons that copy Instagram's gradient. Decide the final name before we lock
-> screenshots and the icon.
+> Name resolved: renamed from "InstaSwap" to **Swaply** and moved the icon off
+> Instagram's gradient (cool violet→cyan) to avoid Meta trademark / trade-dress
+> rejection. Confirm the exact name is free when you reserve it in App Store Connect
+> (names must be globally unique there).
 
 ## Core metadata
-- **App name** (≤30 chars): `InstaSwap`  ← risky, see below. Safer: `SwapTags`, `HandleSwap`, `Tradez`
+- **App name** (≤30 chars): `Swaply`
 - **Subtitle** (≤30 chars): `Trade socials in one scan`
 - **Category**: Primary: Social Networking · Secondary: Utilities
 - **Price**: Free
@@ -42,20 +42,8 @@ shared with the person you choose to swap with.
 swap,handle,username,qr code,scan,social,contact,share,connect,follow,profile,meet,party
 
 ## Screenshots needed (6.9" + 6.5" required)
-1. Home — "Trade socials in one scan" + handle field
+1. Home — "Trade Instagrams in one scan" + handle field
 2. Your QR code screen
 3. Camera scanning a code
 4. Dashboard of collected handles with Follow buttons
 (captured from the iPhone 17 Pro Max simulator = valid 6.9" size)
-
-## Naming & trademark (important)
-Meta's brand policy forbids third-party app names/icons that use "Insta" or "Gram",
-or that imitate Instagram's look. Both "InstaSwap" and the Instagram-style gradient
-icon are exposure here and a plausible App Store rejection reason.
-
-Options:
-- Keep "InstaSwap" and accept rejection risk (not recommended).
-- Rename to something trademark-clean, e.g. SwapTags / HandleSwap / Tradez / Linkup,
-  and shift the icon to our own color (still a clean swap glyph, non-Instagram palette).
-Recommendation: pick a clean name now; it's a 20-minute change here vs. a rejected
-submission after paying the $99.

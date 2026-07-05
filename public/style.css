@@ -1,5 +1,6 @@
 :root{
-  --ig1:#feda75; --ig2:#fa7e1e; --ig3:#d62976; --ig4:#962fbf; --ig5:#4f5bd5;
+  /* Swaply brand gradient (cool violet→cyan; intentionally not Instagram's palette) */
+  --ig1:#c4b5fd; --ig2:#a78bfa; --ig3:#7c3aed; --ig4:#4f46e5; --ig5:#06b6d4;
   --bg:#0b0b0f; --card:#15151c; --ink:#ffffff; --muted:#9aa0aa; --line:#26262f;
 }
 *{box-sizing:border-box}

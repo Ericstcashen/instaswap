@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>InstaSwap</string>
+        <string>Swaply</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -48,6 +48,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>InstaSwap uses the camera to scan a friend's code so you can swap Instagrams.</string>
+	<string>Swaply uses the camera to scan a friend's code so you can swap Instagrams.</string>
 </dict>
 </plist>
