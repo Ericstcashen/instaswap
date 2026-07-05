@@ -21,6 +21,7 @@
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.4.1",
+    "qrcode": "^1.5.4",
     "sharp": "^0.35.3"
   }
 }
