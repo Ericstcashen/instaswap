@@ -4,7 +4,7 @@ Trade Instagram handles in one scan. One person shows a QR/link; the other types
 their handle once, and it lands in the host's **own dashboard** with a one-tap
 follow — no spelling usernames out loud, no third-party form service.
 
-Self-hosted: your own Node server + local storage. **Not tied to Netlify.**
+Self-hosted: your own Node server + local storage. 
 
 ## Run it locally
 
